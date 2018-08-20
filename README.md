@@ -1,6 +1,8 @@
 # ghc-scheduler
 Helps with visualising the schedule for GHC 2018.
 
+<a href="https://raw.githubusercontent.com/charlottetan/ghc-scheduler/master/scheduler.PNG"><img src="https://raw.githubusercontent.com/charlottetan/ghc-scheduler/master/scheduler.PNG" width="50%"></a>
+
 ## Install
 1. Go to the [raw js](https://raw.githubusercontent.com/charlottetan/ghc-scheduler/master/ghc.js) and copy it (ctrl-c).
 2. Go to the [GHC sessions page](http://www.cvent.com/events/grace-hopper-celebration/agenda-6083a0df738343e2ad8b262237e56423.aspx?p=13).
