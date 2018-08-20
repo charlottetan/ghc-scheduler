@@ -13,7 +13,7 @@ Helps with visualising the schedule for GHC 2018.
 * **Dates:** Click to toggle between the dates
 * **Audience | Track | Off:** Choose to colour the sessions by audience, track, or turn it off.
 * **Show all sessions:** Toggle to exclude sessions outside of the main session block. List of excluded sessions is in the code.
-* Session controls:
+* Schedule controls:
   * **Show my schedule:** While viewing sessions, click on a session to add it to your schedule, then click this button to show only the sessions that you have added. Note: This disables the *Show all sessions* filter.
   * **Clear:** Remove all sessions that were in your schedule.
   * **Export:** Export schedule as a `|` delimited list of titles.
@@ -21,4 +21,4 @@ Helps with visualising the schedule for GHC 2018.
   * Textbox: For grabbing exported schedule and importing schedule.
 * **Audience/Track colour blocks:** These can be toggled to show sessions that match a particular audience or track.
 * **Schedule container**: Has two horizontal scrollbars to help with the scrolling.
-* **Each session**: Hovering over a session brings up the description of the session.
+* **Each session**: Hovering over a session brings up the description of the session. Clicking on a session will add it to your schedule which you can then view and edit using the schedule controls.
