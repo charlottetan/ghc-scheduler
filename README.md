@@ -11,7 +11,6 @@ Helps with visualising the schedule for GHC 2018.
 1. Go to the [raw js](https://raw.githubusercontent.com/charlottetan/ghc-scheduler/master/ghc.js) and copy it (ctrl-c).
 2. Go to the [GHC sessions page](http://www.cvent.com/events/grace-hopper-celebration/agenda-6083a0df738343e2ad8b262237e56423.aspx?p=13).
 3. Open Developer Tools and paste the js into the console.
-4. Run `gogo();`.
 
 ## Usage
 * **Dates:** Click to toggle between the dates
