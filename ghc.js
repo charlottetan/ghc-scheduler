@@ -123,7 +123,7 @@ function slotSessions() {
     var includedTracks = localStorage.getItem('includedTracks').split('|');   
     var includedAudiences = localStorage.getItem('includedAudiences').split('|');
 
-    const excludedSessions = [
+    var excludedSessions = [
         'Community Volunteer Orientation',
         'Wednesday Keynote: Padmasree Warrior and Jessica Matthews',
         'Mentoring Circles',
@@ -291,7 +291,7 @@ function toggleTabs(eventObj) {
     jQuery('#dayTabs button').removeClass('selected');
     
     jQuery('#' + timestampButton).addClass('selected');
-    jQuery('#' + timestamp).show();
+    jQuery('#' + timestamp).css('display', 'flex');
 
     var bufferSoThatDivWillNotScroll = 250;
     jQuery('#dayContent').height(jQuery(`#${timestamp}`)[0].scrollHeight+bufferSoThatDivWillNotScroll + 'px');
