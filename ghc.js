@@ -1,33 +1,6 @@
-//http://www.cvent.com/events/grace-hopper-celebration/agenda-6083a0df738343e2ad8b262237e56423.aspx?p=13
-
-// audience:
-// jQuery(".session-content")[0].childNodes[1].childNodes[1].childNodes[0].childNodes[1].innerHTML
-
-// start date:
-// jQuery(".session-content")[0].childNodes[1].childNodes[1].childNodes[2].childNodes[1].innerHTML
-
-// start time:
-// jQuery(".session-content")[0].childNodes[1].childNodes[1].childNodes[4].childNodes[1].innerHTML
-
-// end time:
-// jQuery(".session-content")[0].childNodes[1].childNodes[1].childNodes[6].childNodes[1].innerHTML
-
-// location:
-// jQuery(".session-content")[0].childNodes[1].childNodes[1].childNodes[8].childNodes[1].innerHTML
-
-// description:
-// jQuery(".session-content")[0].childNodes[3].innerHTML.trim()
-
-// track:
-// jQuery(".session-content")[1].childNodes[1].childNodes[1].childNodes[2].childNodes[0].nodeValue
-
-// speakers:
-// jQuery(".session-content")[1].childNodes[1].childNodes[1].childNodes[12].childNodes[0].nodeValue
-
-// =============
+// For: http://www.cvent.com/events/grace-hopper-celebration/agenda-6083a0df738343e2ad8b262237e56423.aspx?p=13
 
 function parseGhcSessions() {
-    console.log('parseGhcSessions();');
     var tracksIdToTextMap = {};
     var tracksTextToIdMap = {};
     var audienceIdToTextMap = {};
@@ -129,33 +102,28 @@ function parseGhcSessions() {
     }
 }
 
-// day: array of tracks
-// track: id, list of sessions, latest end time
 function slotSessions() {
-    console.log('slot');
+    // for some reason this double parse is required for arrays of objects in localStorage
     var sessionArray = JSON.parse(JSON.parse(localStorage.getItem('ghcSessionArray')));
-    console.log('gotten');
     var sList = {};
     var mList = {};
     var lList = {};
 
-    // 0-2hrs
-    // 2.1-3 hrs
-    // more than 3 hours
-    var sLimit = 1000*60*60*2;
-    var mLimit = 1000*60*60*3;
+    // sList: 0-2hrs
+    // mList: 2.1-3 hrs
+    // lList: more than 3 hours
+    const sLimit = 1000*60*60*2;
+    const mLimit = 1000*60*60*3;
     
-    var partyName = "GHC Evening Celebration";
+    const partyName = "GHC Evening Celebration";
 
     var dayArray = localStorage.getItem('ghcDays').split('|');
-    console.log('dayArray');
-    console.log(dayArray);
 
     // get included list
     var includedTracks = localStorage.getItem('includedTracks').split('|');   
     var includedAudiences = localStorage.getItem('includedAudiences').split('|');
 
-    var excludedSessions = [
+    const excludedSessions = [
         'Community Volunteer Orientation',
         'Wednesday Keynote: Padmasree Warrior and Jessica Matthews',
         'Mentoring Circles',
@@ -187,11 +155,12 @@ function slotSessions() {
         'ACM-W Luncheon (Invite Only)',
         'Committee\'s Lunch (Invite Only)',
     ];
+
     if (localStorage.getItem('showAllSessions') === 'true') {
         excludedSessions = [];
     }
 
-    //showSchedule overrides excludedsessions
+    //showSchedule overrides excludedSessions
     var mySchedule = [];
     var showingSchedule = localStorage.getItem('showSchedule') === 'true';    
     if (showingSchedule) {
@@ -201,9 +170,6 @@ function slotSessions() {
         }
         excludedSessions = [];
     }
-
-    console.log('before for');
-    //localStorage.setItem('excludedSessions', JSON.parse(excludedSessions));
 
     for (var i = 0; i < sessionArray.length; i++) {
         var sesDay = sessionArray[i].startDate;
@@ -224,7 +190,8 @@ function slotSessions() {
         }
         var trackKeyIncluded = !trackKey || (trackKey && includedTracks.includes(trackKey));
         var audienceKeyIncluded = !audienceKey || (audienceKey && includedAudiences.includes(audienceKey));
-        var isNotAnExcludedSession = (!showingSchedule && !excludedSessions.includes(sessionArray[i].title)) || (showingSchedule && mySchedule.includes(sessionArray[i].title));
+        var isNotAnExcludedSession = (!showingSchedule && !excludedSessions.includes(sessionArray[i].title)) ||
+                                     (showingSchedule && mySchedule.includes(sessionArray[i].title));
 
         if (trackKeyIncluded && audienceKeyIncluded && isNotAnExcludedSession) {
             // get tshirt size
@@ -313,10 +280,6 @@ function slotSessions() {
     return schedule;
 }
 
-// sesArr
-// days
-//var days = slotSessions(sesArr);
-
 function toggleTabs(eventObj) {
     var timestampButton = eventObj.target.id;
     var timestamp = eventObj.target.id.replace("button", "");
@@ -363,7 +326,6 @@ function toggleAudienceTrackOff(eventObj) {
     }
 
     localStorage.setItem('selectedColouring', eventObj.target.id);
-    console.log(eventObj.target);
 }
 
 function toggleAudienceCategories(eventObj) {
@@ -417,7 +379,7 @@ function toggleMainSessions(eventObj) {
 function sessionClick(eventObj) {
     var title = "";
     if (eventObj.target.tagName === "SPAN") {
-        if (eventObj.target.className == "title") {
+        if (eventObj.target.className === "title") {
             title = eventObj.target.innerHTML;
         } else {
             title = eventObj.target.siblings()[1].innerHTML;
@@ -434,7 +396,6 @@ function sessionClick(eventObj) {
     }
     
     localStorage.setItem('mySchedule', mySched);
-    console.log(title);
 }
 
 function toggleShowSchedule(eventObj) {
@@ -486,46 +447,20 @@ function importSchedule() {
 }
 
 function createDiv() {
-
-    console.log('create');
     jQuery('#schedCss').remove();
     jQuery('#output').remove();
 
-    var trackColours = [
-        '#bf968f',
-        '#f29979',
-        '#7f5940',
-        '#e5b073',
-        '#fff780',
-        '#f2eeb6',
-        '#798060',
-        '#8fcc66',
-        '#53a674',
-        '#79f2da',
-        '#53a0a6',
-        '#80d5ff',
-        '#7c98a6',
-        '#80a2ff',
-        '#99a0cc',
-        '#8959b3',
-        '#f279da',
-        '#80406a',
-        '#e6accb',
-        '#ff8091',
+    const trackColours = [
+        '#bf968f', '#f29979', '#7f5940', '#e5b073', '#fff780',
+        '#f2eeb6', '#798060', '#8fcc66', '#53a674', '#79f2da',
+        '#53a0a6', '#80d5ff', '#7c98a6', '#80a2ff', '#99a0cc',
+        '#8959b3', '#f279da', '#80406a', '#e6accb', '#ff8091',
         '#994d57'
     ];
 
-    var audienceColours = [
-        '#d97b6c',
-        '#807560',
-        '#ffe680',
-        '#73e6a1',
-        '#bff2ff',
-        '#80c4ff',
-        '#46628c',
-        '#9c66cc',
-        '#f2b6de',
-        '#804059'
+    const audienceColours = [
+        '#d97b6c', '#807560', '#ffe680', '#73e6a1', '#bff2ff',
+        '#80c4ff', '#46628c', '#9c66cc', '#f2b6de', '#804059'
     ];
 
     // hard to see
@@ -545,14 +480,17 @@ function createDiv() {
     toggleColoursDiv.append(toggleAudienceDiv).append(toggleTrackDiv).append(toggleOffDiv);
 
     // show only main sessions
-    var mainSessionsFilter = jQuery('<div/>', {id: 'mainSessionsFilter', text: 'Show all sessions', title: 'Toggle to exclude sessions that occur outside of the main session block'}).click(toggleMainSessions);
+    var mainSessionsFilter = jQuery('<div/>', {
+        id: 'mainSessionsFilter',
+        text: 'Show all sessions',
+        title: 'Toggle to exclude sessions that occur outside of the main session block'
+    }).click(toggleMainSessions);
 
     if (localStorage.getItem('showSchedule') === 'true') {
         mainSessionsFilter.addClass("disabled");
     } else if (localStorage.getItem('showAllSessions') === 'true') {
         mainSessionsFilter.addClass("selected");
     }
-
 
     // mySchedule controls
     var scheduleControlsDiv = jQuery('<div/>', {id: 'scheduleControlsDiv'});
@@ -590,7 +528,6 @@ function createDiv() {
     var audienceCss = '';
     var audienceColourCounter = 0;
 
-    console.log('manual sort');
     //manual sort
     var audienceKeys = [
         "Student", "Faculty",
@@ -626,8 +563,7 @@ function createDiv() {
     dayLegend.append(trackLegend);
     dayLegend.append(audienceLegend);
 
-    console.log('colours');
-    //colours: http://phrogz.net/css/distinct-colors.html, sat 50-25, val
+    // colours: http://phrogz.net/css/distinct-colors.html, sat 50-25, val
     var cssStylesHtml = `
     #output {
         font-family: arial, sans-serif; 
@@ -759,7 +695,6 @@ function createDiv() {
         .html(cssStylesHtml)
         .appendTo("head");
     
-    console.log('appended css');
     var output = jQuery('<div/>', {id: 'output'});
     var dayTabs = jQuery('<div/>', {id: 'dayTabs'});
 
@@ -787,9 +722,7 @@ function createDiv() {
     jQuery('.header').after(output);
 }
 
-
 function reflow() {
-    console.log('reflow');
     var schedule = slotSessions();
 
     var dayContainer = jQuery('#dayContainer');
@@ -895,8 +828,8 @@ function reflow() {
     jQuery('#' + selectedColouring).click();
 }
 
-
 function gogo() {
+    console.log("Here we go!");
     // parse again if page was refreshed
     if (!(sessionStorage.isOldSession === "true")) {
         sessionStorage.isOldSession = true;
@@ -906,3 +839,4 @@ function gogo() {
     reflow();
 }
 
+gogo();
