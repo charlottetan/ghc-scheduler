@@ -427,13 +427,16 @@ function toggleShowSchedule(eventObj) {
 
 function clearSchedule() {
     localStorage.removeItem('mySchedule');
-    localStorage.setItem('showSchedule', false);
 
     // update controls
     jQuery("#scheduleInput").val('');
     jQuery("#mainSessionsFilter").removeClass("disabled");
 
-    reflow();
+    // set it up so that we can toggle the showSchedule button
+    localStorage.setItem('showSchedule', true);
+    jQuery("#scheduleShowDiv").click();
+
+    // no need reflow(), toggleShowSchedule will do it
 }
 
 function exportSchedule() {
